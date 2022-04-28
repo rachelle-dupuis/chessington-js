@@ -17,7 +17,6 @@ export default class Rook extends Piece {
                 availableMoves.push(Square.at(i, col));
             }
         }
-        console.log(availableMoves);
         return availableMoves;
     }
 }
