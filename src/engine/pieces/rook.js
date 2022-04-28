@@ -1,22 +1,11 @@
-import Piece from './piece';
-import Square from "../square";
+import StraightLineMover from "./straightLineMover";
 
-export default class Rook extends Piece {
+export default class Rook extends StraightLineMover {
     constructor(player) {
         super(player);
     }
 
     getAvailableMoves(board) {
-        const {row, col} = board.findPiece(this);
-        let availableMoves = [];
-        for (let i = 0; i <= 7; i++) {
-            if (i !== col) {
-                availableMoves.push(Square.at(row, i));
-            }
-            if (i !== row) {
-                availableMoves.push(Square.at(i, col));
-            }
-        }
-        return availableMoves;
+        return this.getLateralMoves(board);
     }
 }
