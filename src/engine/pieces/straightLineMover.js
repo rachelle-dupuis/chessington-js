@@ -11,31 +11,41 @@ export default class StraightLineMover extends Piece {
         let bishopRow = row;
         let bishopCol = col;
         let availableMoves = [];
-        while (bishopRow < 7 && bishopCol < 7) {
+        let pieceBlocked = false;
+        function resetValues() {
+            bishopRow = row;
+            bishopCol = col;
+            pieceBlocked = false;
+        }
+        function addUnoccupiedSquareToAvailableMoves(row, col) {
+            if (board.getPiece(Square.at(row, col)) === undefined) {
+                availableMoves.push(Square.at(row, col));
+            } else {
+                pieceBlocked = true;
+            }
+        }
+        while (bishopRow < 7 && bishopCol < 7 && !pieceBlocked) {
             bishopRow++;
             bishopCol++;
-            availableMoves.push(Square.at(bishopRow, bishopCol));
+            addUnoccupiedSquareToAvailableMoves(bishopRow, bishopCol);
         }
-        bishopRow = row;
-        bishopCol = col;
-        while (bishopRow < 7 && bishopCol > 0) {
+        resetValues();
+        while (bishopRow < 7 && bishopCol > 0 && !pieceBlocked) {
             bishopRow++;
             bishopCol--;
-            availableMoves.push(Square.at(bishopRow, bishopCol));
+            addUnoccupiedSquareToAvailableMoves(bishopRow, bishopCol);
         }
-        bishopRow = row;
-        bishopCol = col;
-        while (bishopRow > 0 && bishopCol > 0) {
+        resetValues();
+        while (bishopRow > 0 && bishopCol > 0 && !pieceBlocked) {
             bishopRow--;
             bishopCol--;
-            availableMoves.push(Square.at(bishopRow, bishopCol));
+            addUnoccupiedSquareToAvailableMoves(bishopRow, bishopCol);
         }
-        bishopRow = row;
-        bishopCol = col;
-        while (bishopRow > 0 && bishopCol < 7) {
+        resetValues();
+        while (bishopRow > 0 && bishopCol < 7 && !pieceBlocked) {
             bishopRow--;
             bishopCol++;
-            availableMoves.push(Square.at(bishopRow, bishopCol));
+            addUnoccupiedSquareToAvailableMoves(bishopRow, bishopCol);
         }
         return availableMoves;
     }
