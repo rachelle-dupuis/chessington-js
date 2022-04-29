@@ -9,7 +9,7 @@ export default class King extends Piece {
     getAvailableMoves(board) {
         const {row, col} = board.findPiece(this);
         let availableMoves = [];
-        let kingMoves = [
+        const kingMoves = [
             Square.at(row + 1, col - 1),
             Square.at(row, col + 1),
             Square.at(row + 1, col + 1),
