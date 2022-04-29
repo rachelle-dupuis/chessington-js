@@ -50,42 +50,32 @@ export default class StraightLineMover extends Piece {
             rookRow = row;
             rookCol = col;
             pieceBlocked = false;
-            return;
         }
-        while (rookRow < 7 && pieceBlocked === false) {
+        function addUnoccupiedSquareToAvailableMoves(row, col) {
+            if (board.getPiece(Square.at(row, col)) === undefined) {
+                availableMoves.push(Square.at(row, col));
+            } else {
+                pieceBlocked = true;
+            }
+        }
+        while (rookRow < 7 && !pieceBlocked) {
             rookRow++
-            if (board.getPiece(Square.at(rookRow, rookCol)) === undefined) {
-                availableMoves.push(Square.at(rookRow, rookCol));
-            } else {
-                pieceBlocked = true;
-            }
+            addUnoccupiedSquareToAvailableMoves(rookRow, rookCol);
         }
         resetValues();
-        while (rookRow > 0 && pieceBlocked === false) {
+        while (rookRow > 0 && !pieceBlocked) {
             rookRow--
-            if (board.getPiece(Square.at(rookRow, rookCol)) === undefined) {
-                availableMoves.push(Square.at(rookRow, rookCol));
-            } else {
-                pieceBlocked = true;
-            }
+            addUnoccupiedSquareToAvailableMoves(rookRow, rookCol);
         }
         resetValues();
-        while (rookCol > 0 && pieceBlocked === false) {
+        while (rookCol > 0 && !pieceBlocked) {
             rookCol--
-            if (board.getPiece(Square.at(rookRow, rookCol)) === undefined) {
-                availableMoves.push(Square.at(rookRow, rookCol));
-            } else {
-                pieceBlocked = true;
-            }
+            addUnoccupiedSquareToAvailableMoves(rookRow, rookCol);
         }
         resetValues();
-        while (rookCol < 7 && pieceBlocked === false) {
+        while (rookCol < 7 && !pieceBlocked) {
             rookCol++
-            if (board.getPiece(Square.at(rookRow, rookCol)) === undefined) {
-                availableMoves.push(Square.at(rookRow, rookCol));
-            } else {
-                pieceBlocked = true;
-            }
+            addUnoccupiedSquareToAvailableMoves(rookRow, rookCol);
         }
         return availableMoves;
     }
