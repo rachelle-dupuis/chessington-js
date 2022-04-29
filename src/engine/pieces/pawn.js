@@ -10,23 +10,20 @@ export default class Pawn extends Piece {
     getAvailableMoves(board) {
         const {row, col} = board.findPiece(this);
         let availableMoves = [];
-        function square(row, col) {
+        function squareAt(row, col) {
             return board.getPiece(Square.at(row, col));
         }
-        if (this.player === Player.WHITE) {
-            if (square(row + 1, col) === undefined) {
+        if (this.player === Player.WHITE && row < 7) {
+            if (squareAt(row + 1, col) === undefined) {
                 availableMoves.push(Square.at(row + 1, col))
-            }
-            if (row === 1) {
-                if (square(row + 1, col) === undefined && square(row + 2, col) === undefined) {
+                if (row === 1 && squareAt(row + 2, col) === undefined) {
                     availableMoves.push(Square.at(row + 2, col));
                 }
             }
-        } else {
-            if (square(row - 1, col) === undefined)
-            availableMoves.push(Square.at(row - 1, col))
-            if (row === 6) {
-                if (square(row - 1, col) === undefined && square(row - 2, col) === undefined) {
+        } else if (this.player === Player.BLACK && row > 0) {
+            if (squareAt(row - 1, col) === undefined) {
+                availableMoves.push(Square.at(row - 1, col))
+                if (row === 6 && squareAt(row - 2, col) === undefined) {
                     availableMoves.push(Square.at(row - 2, col));
                 }
             }
