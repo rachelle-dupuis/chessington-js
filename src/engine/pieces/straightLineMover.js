@@ -42,13 +42,49 @@ export default class StraightLineMover extends Piece {
 
     getLateralMoves(board) {
         const {row, col} = board.findPiece(this);
+        let rookRow = row;
+        let rookCol = col;
         let availableMoves = [];
-        for (let i = 0; i <= 7; i++) {
-            if (i !== col) {
-                availableMoves.push(Square.at(row, i));
+        let pieceBlocked = false;
+        function resetValues() {
+            rookRow = row;
+            rookCol = col;
+            pieceBlocked = false;
+            return;
+        }
+        while (rookRow < 7 && pieceBlocked === false) {
+            rookRow++
+            if (board.getPiece(Square.at(rookRow, rookCol)) === undefined) {
+                availableMoves.push(Square.at(rookRow, rookCol));
+            } else {
+                pieceBlocked = true;
             }
-            if (i !== row) {
-                availableMoves.push(Square.at(i, col));
+        }
+        resetValues();
+        while (rookRow > 0 && pieceBlocked === false) {
+            rookRow--
+            if (board.getPiece(Square.at(rookRow, rookCol)) === undefined) {
+                availableMoves.push(Square.at(rookRow, rookCol));
+            } else {
+                pieceBlocked = true;
+            }
+        }
+        resetValues();
+        while (rookCol > 0 && pieceBlocked === false) {
+            rookCol--
+            if (board.getPiece(Square.at(rookRow, rookCol)) === undefined) {
+                availableMoves.push(Square.at(rookRow, rookCol));
+            } else {
+                pieceBlocked = true;
+            }
+        }
+        resetValues();
+        while (rookCol < 7 && pieceBlocked === false) {
+            rookCol++
+            if (board.getPiece(Square.at(rookRow, rookCol)) === undefined) {
+                availableMoves.push(Square.at(rookRow, rookCol));
+            } else {
+                pieceBlocked = true;
             }
         }
         return availableMoves;
