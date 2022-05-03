@@ -4,6 +4,7 @@ import Pawn from '../../../src/engine/pieces/pawn';
 import Board from '../../../src/engine/board';
 import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
+import Rook from "../../../src/engine/pieces/rook";
 
 describe('Knight', () => {
 
@@ -55,5 +56,20 @@ describe('Knight', () => {
         const expectedMoves = [Square.at(1, 2), Square.at(2, 1)];
 
         moves.should.deep.have.members(expectedMoves);
+    });
+
+    it('can take opposing pieces', () => {
+        const knight = new Knight(Player.WHITE);
+        const pawn = new Pawn(Player.BLACK);
+        const rook = new Rook(Player.BLACK);
+        board.setPiece(Square.at(4, 4), knight);
+        board.setPiece(Square.at(5, 6), pawn);
+        board.setPiece(Square.at(6, 3), rook);
+
+        const moves = knight.getAvailableMoves(board);
+
+        const expectedMoves = [Square.at(5, 6), Square.at(6, 3)];
+
+        moves.should.deep.include.members(expectedMoves);
     });
 });
