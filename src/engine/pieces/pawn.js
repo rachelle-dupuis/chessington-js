@@ -16,6 +16,15 @@ export default class Pawn extends Piece {
         function squareAt(row, col) {
             return board.getPiece(Square.at(row, col));
         }
+        function getDiagonalMoves(moves, player) {
+            for (const move of moves) {
+                if (squareAt(move.row, move.col) !== undefined
+                    && squareAt(move.row, move.col).player !== player
+                    && !(board.getPiece(Square.at(move.row, move.col)) instanceof King)) {
+                    availableMoves.push(move);
+                }
+            }
+        }
         if (this.player === Player.WHITE && row < 7) {
             if (squareAt(row + 1, col) === undefined) {
                 availableMoves.push(Square.at(row + 1, col))
@@ -23,13 +32,7 @@ export default class Pawn extends Piece {
                     availableMoves.push(Square.at(row + 2, col));
                 }
             }
-            for (const move of whiteDiagonalMoves) {
-                if (squareAt(move.row, move.col) !== undefined
-                    && squareAt(move.row, move.col).player !== this.player
-                    && !(board.getPiece(Square.at(move.row, move.col)) instanceof King)) {
-                    availableMoves.push(move);
-                }
-            }
+            getDiagonalMoves(whiteDiagonalMoves, this.player);
         } else if (this.player === Player.BLACK && row > 0) {
             if (squareAt(row - 1, col) === undefined) {
                 availableMoves.push(Square.at(row - 1, col))
@@ -37,13 +40,7 @@ export default class Pawn extends Piece {
                     availableMoves.push(Square.at(row - 2, col));
                 }
             }
-            for (const move of blackDiagonalMoves) {
-                if (squareAt(move.row, move.col) !== undefined
-                    && squareAt(move.row, move.col).player !== this.player
-                    && !(board.getPiece(Square.at(move.row, move.col)) instanceof King)) {
-                    availableMoves.push(move);
-                }
-            }
+            getDiagonalMoves(blackDiagonalMoves, this.player);
         }
         return availableMoves;
     }
