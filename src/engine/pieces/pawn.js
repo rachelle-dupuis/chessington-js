@@ -10,6 +10,8 @@ export default class Pawn extends Piece {
     getAvailableMoves(board) {
         const {row, col} = board.findPiece(this);
         let availableMoves = [];
+        let whiteDiagonalMoves = [Square.at(row + 1, col + 1), Square.at(row + 1, col - 1)];
+        let blackDiagonalMoves = [Square.at(row - 1, col + 1), Square.at(row - 1, col - 1)];
         function squareAt(row, col) {
             return board.getPiece(Square.at(row, col));
         }
@@ -20,11 +22,10 @@ export default class Pawn extends Piece {
                     availableMoves.push(Square.at(row + 2, col));
                 }
             }
-            if (squareAt(row + 1, col + 1) !== undefined) {
-                availableMoves.push(Square.at(row + 1, col + 1));
-            }
-            if (squareAt(row + 1, col - 1) !== undefined) {
-                availableMoves.push(Square.at(row + 1, col - 1));
+            for (const move of whiteDiagonalMoves) {
+                if (squareAt(move.row, move.col) !== undefined && squareAt(move.row, move.col).player !== this.player) {
+                    availableMoves.push(move);
+                }
             }
         } else if (this.player === Player.BLACK && row > 0) {
             if (squareAt(row - 1, col) === undefined) {
@@ -33,11 +34,10 @@ export default class Pawn extends Piece {
                     availableMoves.push(Square.at(row - 2, col));
                 }
             }
-            if (squareAt(row - 1, col + 1) !== undefined) {
-                availableMoves.push(Square.at(row - 1, col + 1));
-            }
-            if (squareAt(row - 1, col - 1) !== undefined) {
-                availableMoves.push(Square.at(row - 1, col - 1));
+            for (const move of blackDiagonalMoves) {
+                if (squareAt(move.row, move.col) !== undefined && squareAt(move.row, move.col).player !== this.player) {
+                    availableMoves.push(move);
+                }
             }
         }
         return availableMoves;
