@@ -5,6 +5,7 @@ import Board from '../../../src/engine/board';
 import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
 import Rook from "../../../src/engine/pieces/rook";
+import King from "../../../src/engine/pieces/king";
 
 describe('Knight', () => {
 
@@ -86,5 +87,16 @@ describe('Knight', () => {
         const expectedMoves = [Square.at(5, 6), Square.at(6, 3)];
 
         moves.should.deep.not.include.members(expectedMoves);
+    });
+
+    it('cannot take opposing king', () => {
+        const knight = new Knight(Player.WHITE);
+        const king = new King(Player.BLACK);
+        board.setPiece(Square.at(5, 3), knight);
+        board.setPiece(Square.at(7, 4), king);
+
+        const moves = knight.getAvailableMoves(board);
+
+        moves.should.deep.not.include(Square.at(7, 4));
     });
 });
