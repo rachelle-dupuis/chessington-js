@@ -21,7 +21,9 @@ export default class King extends Piece {
         ];
         for (const move of kingMoves) {
             if (move.row >= 0 && move.row <= 7 && move.col >= 0 && move.col <= 7) {
-                availableMoves.push(move);
+                if (board.getPiece(Square.at(move.row, move.col)) === undefined || board.getPiece(Square.at(move.row, move.col)).player !== this.player) {
+                    availableMoves.push(move);
+                }
             }
         }
         return availableMoves;
