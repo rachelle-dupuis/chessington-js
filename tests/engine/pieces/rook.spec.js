@@ -68,4 +68,15 @@ describe('Rook', () => {
 
         moves.should.deep.include(Square.at(3, 4));
     });
+
+    it('cannot take friendly pieces', () => {
+        const rook = new Rook(Player.WHITE);
+        const pawn = new Pawn(Player.WHITE);
+        board.setPiece(Square.at(3, 0), rook);
+        board.setPiece(Square.at(3, 4), pawn);
+
+        const moves = rook.getAvailableMoves(board);
+
+        moves.should.not.deep.include(Square.at(3, 4));
+    });
 });
