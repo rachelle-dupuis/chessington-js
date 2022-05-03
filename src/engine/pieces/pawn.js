@@ -1,6 +1,7 @@
 import Piece from './piece';
 import Player from "../player";
 import Square from "../square";
+import King from "./king";
 
 export default class Pawn extends Piece {
     constructor(player) {
@@ -23,7 +24,9 @@ export default class Pawn extends Piece {
                 }
             }
             for (const move of whiteDiagonalMoves) {
-                if (squareAt(move.row, move.col) !== undefined && squareAt(move.row, move.col).player !== this.player) {
+                if (squareAt(move.row, move.col) !== undefined
+                    && squareAt(move.row, move.col).player !== this.player
+                    && !(board.getPiece(Square.at(move.row, move.col)) instanceof King)) {
                     availableMoves.push(move);
                 }
             }
@@ -35,7 +38,9 @@ export default class Pawn extends Piece {
                 }
             }
             for (const move of blackDiagonalMoves) {
-                if (squareAt(move.row, move.col) !== undefined && squareAt(move.row, move.col).player !== this.player) {
+                if (squareAt(move.row, move.col) !== undefined
+                    && squareAt(move.row, move.col).player !== this.player
+                    && !(board.getPiece(Square.at(move.row, move.col)) instanceof King)) {
                     availableMoves.push(move);
                 }
             }
