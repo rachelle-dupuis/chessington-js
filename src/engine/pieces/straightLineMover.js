@@ -1,5 +1,6 @@
 import Piece from './piece';
 import Square from "../square";
+import King from "./king";
 
 export default class StraightLineMover extends Piece {
     constructor(player) {
@@ -64,7 +65,7 @@ export default class StraightLineMover extends Piece {
         function addUnoccupiedSquareToAvailableMoves(row, col, player) {
             if (board.getPiece(Square.at(row, col)) === undefined) {
                 availableMoves.push(Square.at(row, col));
-            } else if (board.getPiece(Square.at(row, col)).player !== player) {
+            } else if (board.getPiece(Square.at(row, col)).player !== player && !(board.getPiece(Square.at(row, col)) instanceof King)) {
                 availableMoves.push(Square.at(row, col));
                 pieceBlocked = true;
             }
