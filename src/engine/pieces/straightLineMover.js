@@ -18,9 +18,12 @@ export default class StraightLineMover extends Piece {
             bishopCol = col;
             pieceBlocked = false;
         }
-        function addUnoccupiedSquareToAvailableMoves(row, col) {
+        function addUnoccupiedSquareToAvailableMoves(row, col, player) {
             if (board.getPiece(Square.at(row, col)) === undefined) {
                 availableMoves.push(Square.at(row, col));
+            } else if (board.getPiece(Square.at(row, col)).player !== player && !(board.getPiece(Square.at(row, col)) instanceof King)) {
+                availableMoves.push(Square.at(row, col));
+                pieceBlocked = true;
             } else {
                 pieceBlocked = true;
             }
@@ -28,25 +31,25 @@ export default class StraightLineMover extends Piece {
         while (bishopRow < 7 && bishopCol < 7 && !pieceBlocked) {
             bishopRow++;
             bishopCol++;
-            addUnoccupiedSquareToAvailableMoves(bishopRow, bishopCol);
+            addUnoccupiedSquareToAvailableMoves(bishopRow, bishopCol, this.player);
         }
         resetValues();
         while (bishopRow < 7 && bishopCol > 0 && !pieceBlocked) {
             bishopRow++;
             bishopCol--;
-            addUnoccupiedSquareToAvailableMoves(bishopRow, bishopCol);
+            addUnoccupiedSquareToAvailableMoves(bishopRow, bishopCol, this.player);
         }
         resetValues();
         while (bishopRow > 0 && bishopCol > 0 && !pieceBlocked) {
             bishopRow--;
             bishopCol--;
-            addUnoccupiedSquareToAvailableMoves(bishopRow, bishopCol);
+            addUnoccupiedSquareToAvailableMoves(bishopRow, bishopCol, this.player);
         }
         resetValues();
         while (bishopRow > 0 && bishopCol < 7 && !pieceBlocked) {
             bishopRow--;
             bishopCol++;
-            addUnoccupiedSquareToAvailableMoves(bishopRow, bishopCol);
+            addUnoccupiedSquareToAvailableMoves(bishopRow, bishopCol, this.player);
         }
         return availableMoves;
     }
