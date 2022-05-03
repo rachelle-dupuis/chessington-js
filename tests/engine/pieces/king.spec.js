@@ -3,6 +3,9 @@ import King from '../../../src/engine/pieces/king';
 import Board from '../../../src/engine/board';
 import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
+import Knight from "../../../src/engine/pieces/knight";
+import Pawn from "../../../src/engine/pieces/pawn";
+import Rook from "../../../src/engine/pieces/rook";
 
 describe('King', () => {
 
@@ -42,4 +45,41 @@ describe('King', () => {
 
         moves.should.deep.have.members(expectedMoves);
     });
+
+    it('can take opposing pieces', () => {
+        const king = new King(Player.WHITE);
+        const knight = new Knight(Player.BLACK);
+        board.setPiece(Square.at(0, 3), king);
+        board.setPiece(Square.at(1, 3), knight);
+
+        const moves = king.getAvailableMoves(board);
+
+        moves.should.deep.include(Square.at(1, 3));
+    });
+
+    // it('cannot take friendly pieces', () => {
+    //     const knight = new Knight(Player.WHITE);
+    //     const pawn = new Pawn(Player.WHITE);
+    //     const rook = new Rook(Player.WHITE);
+    //     board.setPiece(Square.at(4, 4), knight);
+    //     board.setPiece(Square.at(5, 6), pawn);
+    //     board.setPiece(Square.at(6, 3), rook);
+    //
+    //     const moves = knight.getAvailableMoves(board);
+    //
+    //     const expectedMoves = [Square.at(5, 6), Square.at(6, 3)];
+    //
+    //     moves.should.deep.not.include.members(expectedMoves);
+    // });
+    //
+    // it('cannot take opposing king', () => {
+    //     const knight = new Knight(Player.WHITE);
+    //     const king = new King(Player.BLACK);
+    //     board.setPiece(Square.at(5, 3), knight);
+    //     board.setPiece(Square.at(7, 4), king);
+    //
+    //     const moves = knight.getAvailableMoves(board);
+    //
+    //     moves.should.deep.not.include(Square.at(7, 4));
+    // });
 });
