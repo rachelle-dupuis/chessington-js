@@ -5,6 +5,7 @@ import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
 import Board from '../../../src/engine/board';
 import Rook from "../../../src/engine/pieces/rook";
+import King from "../../../src/engine/pieces/king";
 
 describe('Bishop', () => {
 
@@ -74,6 +75,17 @@ describe('Bishop', () => {
         const pawn = new Pawn(Player.WHITE);
         board.setPiece(Square.at(2, 4), bishop);
         board.setPiece(Square.at(5, 7), pawn);
+
+        const moves = bishop.getAvailableMoves(board);
+
+        moves.should.not.deep.include(Square.at(5, 7));
+    });
+
+    it('cannot take opposing king', () => {
+        const bishop = new Bishop(Player.WHITE);
+        const king = new King(Player.BLACK);
+        board.setPiece(Square.at(2, 4), bishop);
+        board.setPiece(Square.at(5, 7), king);
 
         const moves = bishop.getAvailableMoves(board);
 
