@@ -7,6 +7,7 @@ import Square from '../../../src/engine/square';
 import GameSettings from '../../../src/engine/gameSettings';
 import Bishop from "../../../src/engine/pieces/bishop";
 import Rook from "../../../src/engine/pieces/rook";
+import King from "../../../src/engine/pieces/king";
 
 describe('Queen', () => {
 
@@ -104,5 +105,16 @@ describe('Queen', () => {
         const expectedMoves = [Square.at(4, 3), Square.at(5, 6)]
 
         moves.should.not.deep.include.members(expectedMoves);
+    });
+
+    it('cannot take opposing king', () => {
+        const queen = new Queen(Player.WHITE);
+        const king = new King(Player.BLACK);
+        board.setPiece(Square.at(4, 4), queen);
+        board.setPiece(Square.at(7, 4), king);
+
+        const moves = queen.getAvailableMoves(board);
+
+        moves.should.not.deep.include(Square.at(7, 4));
     });
 });
