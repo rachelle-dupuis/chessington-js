@@ -61,31 +61,35 @@ export default class StraightLineMover extends Piece {
             rookCol = col;
             pieceBlocked = false;
         }
-        function addUnoccupiedSquareToAvailableMoves(row, col) {
+        function addUnoccupiedSquareToAvailableMoves(row, col, player) {
             if (board.getPiece(Square.at(row, col)) === undefined) {
                 availableMoves.push(Square.at(row, col));
-            } else {
+            } else if (board.getPiece(Square.at(row, col)).player !== player) {
+                availableMoves.push(Square.at(row, col));
+                pieceBlocked = true;
+            }
+            else {
                 pieceBlocked = true;
             }
         }
         while (rookRow < 7 && !pieceBlocked) {
             rookRow++
-            addUnoccupiedSquareToAvailableMoves(rookRow, rookCol);
+            addUnoccupiedSquareToAvailableMoves(rookRow, rookCol, this.player);
         }
         resetValues();
         while (rookRow > 0 && !pieceBlocked) {
             rookRow--
-            addUnoccupiedSquareToAvailableMoves(rookRow, rookCol);
+            addUnoccupiedSquareToAvailableMoves(rookRow, rookCol, this.player);
         }
         resetValues();
         while (rookCol > 0 && !pieceBlocked) {
             rookCol--
-            addUnoccupiedSquareToAvailableMoves(rookRow, rookCol);
+            addUnoccupiedSquareToAvailableMoves(rookRow, rookCol, this.player);
         }
         resetValues();
         while (rookCol < 7 && !pieceBlocked) {
             rookCol++
-            addUnoccupiedSquareToAvailableMoves(rookRow, rookCol);
+            addUnoccupiedSquareToAvailableMoves(rookRow, rookCol, this.player);
         }
         return availableMoves;
     }
