@@ -22,7 +22,9 @@ export default class Knight extends Piece {
         ];
         for (const move of knightMoves) {
             if (move.row >= 0 && move.row <= 7 && move.col >= 0 && move.col <= 7) {
-                if (board.getPiece(Square.at(move.row, move.col)) === undefined || board.getPiece(Square.at(move.row, move.col)).player !== this.player && !(board.getPiece(Square.at(move.row, move.col)) instanceof King)) {
+                if (board.getPiece(Square.at(move.row, move.col)) === undefined
+                    || board.getPiece(Square.at(move.row, move.col)).player !== this.player
+                    && !(board.getPiece(Square.at(move.row, move.col)) instanceof King)) {
                     availableMoves.push(move);
                 }
             }

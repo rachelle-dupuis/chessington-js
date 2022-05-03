@@ -68,14 +68,14 @@ describe('King', () => {
         moves.should.deep.not.include(Square.at(1, 3));
     });
 
-    // it('cannot take opposing king', () => {
-    //     const knight = new Knight(Player.WHITE);
-    //     const king = new King(Player.BLACK);
-    //     board.setPiece(Square.at(5, 3), knight);
-    //     board.setPiece(Square.at(7, 4), king);
-    //
-    //     const moves = knight.getAvailableMoves(board);
-    //
-    //     moves.should.deep.not.include(Square.at(7, 4));
-    // });
+    it('cannot take opposing king', () => {
+        const kingWhite = new King(Player.WHITE);
+        const kingBlack = new King(Player.BLACK);
+        board.setPiece(Square.at(0, 3), kingWhite);
+        board.setPiece(Square.at(1, 3), kingBlack);
+
+        const moves = kingWhite.getAvailableMoves(board);
+
+        moves.should.deep.not.include(Square.at(1, 3));
+    });
 });
