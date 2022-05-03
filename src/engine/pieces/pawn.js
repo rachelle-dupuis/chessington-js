@@ -20,12 +20,24 @@ export default class Pawn extends Piece {
                     availableMoves.push(Square.at(row + 2, col));
                 }
             }
+            if (squareAt(row + 1, col + 1) !== undefined) {
+                availableMoves.push(Square.at(row + 1, col + 1));
+            }
+            if (squareAt(row + 1, col - 1) !== undefined) {
+                availableMoves.push(Square.at(row + 1, col - 1));
+            }
         } else if (this.player === Player.BLACK && row > 0) {
             if (squareAt(row - 1, col) === undefined) {
                 availableMoves.push(Square.at(row - 1, col))
                 if (row === 6 && squareAt(row - 2, col) === undefined) {
                     availableMoves.push(Square.at(row - 2, col));
                 }
+            }
+            if (squareAt(row - 1, col + 1) !== undefined) {
+                availableMoves.push(Square.at(row - 1, col + 1));
+            }
+            if (squareAt(row - 1, col - 1) !== undefined) {
+                availableMoves.push(Square.at(row - 1, col - 1));
             }
         }
         return availableMoves;
