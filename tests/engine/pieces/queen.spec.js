@@ -90,4 +90,19 @@ describe('Queen', () => {
 
         moves.should.deep.include.members(expectedMoves);
     });
+
+    it('cannot take friendly pieces', () => {
+        const queen = new Queen(Player.WHITE);
+        const pawn = new Pawn(Player.WHITE);
+        const rook = new Rook(Player.WHITE);
+        board.setPiece(Square.at(2, 3), queen);
+        board.setPiece(Square.at(4, 3), pawn);
+        board.setPiece(Square.at(5, 6), rook);
+
+        const moves = queen.getAvailableMoves(board);
+
+        const expectedMoves = [Square.at(4, 3), Square.at(5, 6)]
+
+        moves.should.not.deep.include.members(expectedMoves);
+    });
 });
